@@ -15,4 +15,8 @@ attr_reader :head,
         @head = Node.new(surname)
     end
 
+    def to_string
+        p "The #{@head.surname} family"
+    end
+
 end
