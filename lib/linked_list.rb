@@ -1,4 +1,3 @@
-
 require "./lib/node"
 
 class LinkedList
@@ -28,15 +27,15 @@ class LinkedList
   end
 
   def append(surname, supplies)
-    if @head.nil?
-      @head = new_node(surname, supplies)
-    else
-      current_node = @head
-      until current_node.next_node == nil
-        current_node = current_node.next_node
+      if @head.nil?
+        @head = new_node(surname, supplies)
+      else
+        current_node = @head
+        until current_node.next_node == nil
+          current_node = current_node.next_node
+        end
+      current_node.next_node = new_node(surname, supplies)
       end
-    current_node.next_node = new_node(surname, supplies)
-    end
   end
 
   def prepend(surname, supplies)
@@ -58,7 +57,6 @@ class LinkedList
       offset = position - 1
       index_previous_node = @head
       index_subsequent_node = @head.next_node
-
       offset.times do
         index_previous_node = index_previous_node.next_node
         index_subsequent_node = index_subsequent_node.next_node
@@ -145,12 +143,12 @@ class LinkedList
       "Supplies without wagons? Preposterous!"
     else
       current_node = @head
-      total_supplies = @head.supplies
+      total_supplies = Hash.new
       until current_node.next_node == nil
+        total_supplies.merge!(current_node.supplies) { | key, val_1, val_2 | val_1 + val_2}
         current_node = current_node.next_node
-        total_supplies.merge!(current_node.supplies) { |key, val_1, val_2| val_1 + val_2}
       end
-    total_supplies
+      total_supplies.merge!(current_node.supplies) { | key, val_1, val_2 | val_1 + val_2}
     end
   end
 
