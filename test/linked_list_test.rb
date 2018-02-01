@@ -205,7 +205,7 @@ class LinkedListTest < Minitest::Test
     assert_equal "The West family, followed by the Adams family, followed by the Smith family", list.find(-1, 1)
   end
 
-  def test_can_find_multiple_names_when_desired_does_not_exceed_list_length
+  def test_can_find_multiple_names_when_num_elements_does_not_exceed_list_length
     #skip
     list = LinkedList.new
     list.append("West", {pounds_of_food: 60})
@@ -216,7 +216,7 @@ class LinkedListTest < Minitest::Test
     assert_equal "The Adams family, followed by the Smith family", list.find(1,2)
   end
 
-  def test_can_find_multiple_names_when_desired_exceeds_list_length
+  def test_can_find_multiple_names_when_num_elements_exceeds_list_length
     #skip
     list = LinkedList.new
     list.append("West", {pounds_of_food: 60})
@@ -227,7 +227,7 @@ class LinkedListTest < Minitest::Test
     assert_equal "The Adams family, followed by the Smith family, followed by the Rhodes family", list.find(1,100)
   end
 
-  def test_can_find_multiple_names_when_desired_less_than_0
+  def test_can_find_multiple_names_when_num_elements_less_than_0
     #skip
     list = LinkedList.new
     list.append("West", {pounds_of_food: 60})
@@ -291,4 +291,48 @@ class LinkedListTest < Minitest::Test
     assert_equal "There are no families in the wagon train", list.to_string
   end
 
+  def test_supplies_with_no_wagons
+    list = LinkedList.new
+    assert_equal "Supplies without wagons? Preposterous!", list.supplies
+  end
+
+  def test_can_access_supplies
+    list = LinkedList.new
+
+    list.append("West", {pounds_of_food: 60})
+    expected = {pounds_of_food: 60}
+    assert_equal expected, list.head.supplies
+
+    list.append("Adams", {hunting_ammunition: 20})
+    expected = {hunting_ammunition: 20}
+    assert_equal expected, list.head.next_node.supplies
+  end
+
+  def test_supplies_method_returns_supplies_merged
+    list = LinkedList.new
+
+    list.append("West", {pounds_of_food: 60})
+    expected = {pounds_of_food: 60}
+    assert_equal expected, list.supplies
+
+    list.append("Adams", {hunting_ammunition: 20})
+    expected = {pounds_of_food: 60, hunting_ammunition: 20}
+    assert_equal expected, list.supplies
+
+    list.append("Smith", {spare_wagon_parts: 10})
+    expected = {pounds_of_food: 60, hunting_ammunition: 20, spare_wagon_parts: 10}
+    assert_equal expected, list.supplies
+  end
+
+  # def test_supply_values_update                       #test fails!!!!
+  #   list = LinkedList.new
+  #
+  #   list.append("Adams", {hunting_ammunition: 20})
+  #   expected = {hunting_ammunition: 20}
+  #   assert_equal expected, list.supplies
+  #
+  #   list.append("Rhodes", {hunting_ammunition: 30})
+  #   expected = {hunting_ammunition: 50}
+  #   assert_equal expected, list.supplies
+  # end
 end

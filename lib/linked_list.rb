@@ -1,6 +1,5 @@
 
 require "./lib/node"
-require "./lib/wagon_train"
 
 class LinkedList
 
@@ -11,7 +10,7 @@ class LinkedList
   end
 
   def new_node(surname, supplies)
-    Node.new(surname.to_s)
+    Node.new(surname.to_s, supplies)
   end
 
   def count
@@ -140,4 +139,20 @@ class LinkedList
       dead_family
     end
   end
+
+  def supplies
+    if @head.nil?
+      "Supplies without wagons? Preposterous!"
+    else
+      current_node = @head
+      total_supplies = @head.supplies
+      until current_node.next_node == nil
+        current_node = current_node.next_node
+        total_supplies = total_supplies.merge!(current_node.supplies)
+      end
+    total_supplies
+    end
+
+  end
+
 end
