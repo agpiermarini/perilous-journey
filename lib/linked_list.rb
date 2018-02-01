@@ -148,11 +148,10 @@ class LinkedList
       total_supplies = @head.supplies
       until current_node.next_node == nil
         current_node = current_node.next_node
-        total_supplies = total_supplies.merge!(current_node.supplies)
+        total_supplies.merge!(current_node.supplies) { |key, val_1, val_2| val_1 + val_2}
       end
     total_supplies
     end
-
   end
 
 end
