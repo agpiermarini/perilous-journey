@@ -9,4 +9,16 @@ class WagonTrain
     @list = LinkedList.new
   end
 
+  def append(surname, supplies)
+    @list.append(surname, supplies)
+  end
+
+  def count
+    @list.count
+  end
+
+  def supplies
+    @list.supplies
+  end
+
 end
