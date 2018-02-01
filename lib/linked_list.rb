@@ -10,7 +10,7 @@ class LinkedList
       @head = nil
   end
 
-  def new_node(surname)
+  def new_node(surname, supplies)
     Node.new(surname.to_s)
   end
 
@@ -28,33 +28,33 @@ class LinkedList
     end
   end
 
-  def append(surname)
+  def append(surname, supplies)
     if @head.nil?
-      @head = new_node(surname)
+      @head = new_node(surname, supplies)
     else
       current_node = @head
       until current_node.next_node == nil
         current_node = current_node.next_node
       end
-    current_node.next_node = new_node(surname)
+    current_node.next_node = new_node(surname, supplies)
     end
   end
 
-  def prepend(surname)
+  def prepend(surname, supplies)
     if @head.nil?
-      @head = new_node(surname)
+      @head = new_node(surname, supplies)
     else
       previous_head = @head
-      @head = new_node(surname)
+      @head = new_node(surname, supplies)
       @head.next_node = previous_head
     end
   end
 
-  def insert(position, surname)
+  def insert(position, surname, supplies)
     if @head.nil? || position <= 0
-      prepend(surname)
+      prepend(surname, supplies)
     elsif position >= count
-      append(surname)
+      append(surname, supplies)
     else
       offset = position - 1
       index_previous_node = @head
@@ -64,7 +64,7 @@ class LinkedList
         index_previous_node = index_previous_node.next_node
         index_subsequent_node = index_subsequent_node.next_node
       end
-      index_previous_node.next_node = new_node(surname)
+      index_previous_node.next_node = new_node(surname, supplies)
       index_previous_node.next_node.next_node = index_subsequent_node
     end
   end
