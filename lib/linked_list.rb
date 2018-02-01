@@ -1,30 +1,30 @@
 
 require "./lib/node"
+require "./lib/wagon_train"
+
 class LinkedList
 
-attr_accessor   :head,
-                :count
+  attr_accessor   :head
 
-    def initialize
-        @head = nil
-        @count = count
-    end
+  def initialize
+      @head = nil
+  end
 
-    def new_node(surname)
-      Node.new(surname.to_s)
-    end
+  def new_node(surname)
+    Node.new(surname.to_s)
+  end
 
     def count
       if @head.nil?
-        @count = 0
+        count = 0
       else
         current_node = @head
-        @count = 1
+        count = 1
         until current_node.next_node.nil?
-            @count += 1
+            count += 1
             current_node = current_node.next_node
         end
-        @count
+        count
       end
     end
 
