@@ -2,27 +2,30 @@ require "minitest/autorun"
 require "minitest/pride"
 require "pry"
 require "./lib/linked_list"
-require "./lib/wagon_train"
 
 class LinkedListTest < Minitest::Test
 
   def test_it_can_be_created
     list = LinkedList.new
+
     assert_instance_of LinkedList, list
   end
 
   def test_it_has_head_nil_by_default
     list = LinkedList.new
+
     assert_nil list.head
   end
 
   def test_new_node_can_be_created
     list = LinkedList.new
+
     assert_instance_of Node, list.new_node("West", {pounds_of_food: 60})
   end
 
   def test_new_node_non_alphabetical
     list = LinkedList.new
+
     assert_instance_of Node, list.new_node(!12, {pounds_of_food: 1})
   end
 
@@ -34,9 +37,9 @@ class LinkedListTest < Minitest::Test
   end
 
   def test_appended_node_points_to_nil
-    #skip
     list = LinkedList.new
     list.append("West", {pounds_of_food: 60})
+
     assert_nil list.head.next_node
   end
 
@@ -44,6 +47,7 @@ class LinkedListTest < Minitest::Test
     list = LinkedList.new
     list.append("West", {pounds_of_food: 60})
     list.append("Adams", {hunting_ammunition: 20})
+
     assert_nil list.head.next_node.next_node
   end
 
@@ -51,19 +55,23 @@ class LinkedListTest < Minitest::Test
     list = LinkedList.new
     list.append("West", {pounds_of_food: 60})
     list.append("Adams", {hunting_ammunition: 20})
+
     assert_nil list.head.next_node.next_node
   end
 
   def test_nodes_can_be_counted
-    #skip
     list = LinkedList.new
     assert_equal 0, list.count
+
     list.append("West", {pounds_of_food: 60})
     assert_equal 1, list.count
+
     list.append("Adams", {hunting_ammunition: 20})
     assert_equal 2, list.count
+
     list.append("Hardy", {spare_wagon_parts: 5})
     assert_equal 3, list.count
+
     list.append("Smith", {spare_wagon_parts: 10})
     assert_equal 4, list.count
     assert_equal 4, list.count
@@ -75,9 +83,7 @@ class LinkedListTest < Minitest::Test
     assert_equal "The West family", list.to_string
   end
 
-##Iteration 2
   def test_can_append_multiple_nodes
-    #skip
     list = LinkedList.new
 
     assert_instance_of Node, list.append("West", {pounds_of_food: 60})
@@ -101,7 +107,6 @@ class LinkedListTest < Minitest::Test
   end
 
   def test_generates_string_with_multiple_family_names
-    #skip
     list = LinkedList.new
     list.append("West", {pounds_of_food: 60})
     list.append("Adams", {hunting_ammunition: 20})
@@ -110,9 +115,7 @@ class LinkedListTest < Minitest::Test
     assert_equal ("The West family, followed by the Adams family, followed by the Smith family, followed by the Hardy family"), list.to_string
   end
 
-#Iteration 3
   def test_can_prepend_nodes
-    #skip
     list = LinkedList.new
     list.append("West", {pounds_of_food: 60})
     list.append("Adams", {hunting_ammunition: 20})
@@ -125,7 +128,6 @@ class LinkedListTest < Minitest::Test
   end
 
   def test_can_prepend_nodes_when_list_empty
-    #skip
     list = LinkedList.new
 
     list.prepend("West", {pounds_of_food: 60})
@@ -134,7 +136,6 @@ class LinkedListTest < Minitest::Test
   end
 
   def test_can_insert_nodes_in_index
-    #skip
     list = LinkedList.new
     list.append("West", {pounds_of_food: 60})
     list.append("Adams", {hunting_ammunition: 20})
@@ -149,7 +150,6 @@ class LinkedListTest < Minitest::Test
   end
 
   def test_can_insert_nodes_below_index
-    #skip
     list = LinkedList.new
     list.append("West", {pounds_of_food: 60})
     list.append("Adams", {hunting_ammunition: 20})
@@ -164,7 +164,6 @@ class LinkedListTest < Minitest::Test
   end
 
   def test_can_insert_nodes_above_index
-    #skip
     list = LinkedList.new
     list.append("West", {pounds_of_food: 60})
     list.append("Adams", {hunting_ammunition: 20})
@@ -206,7 +205,6 @@ class LinkedListTest < Minitest::Test
   end
 
   def test_can_find_multiple_names_when_num_elements_does_not_exceed_list_length
-    #skip
     list = LinkedList.new
     list.append("West", {pounds_of_food: 60})
     list.append("Adams", {hunting_ammunition: 20})
@@ -217,7 +215,6 @@ class LinkedListTest < Minitest::Test
   end
 
   def test_can_find_multiple_names_when_num_elements_exceeds_list_length
-    #skip
     list = LinkedList.new
     list.append("West", {pounds_of_food: 60})
     list.append("Adams", {hunting_ammunition: 20})
@@ -228,7 +225,6 @@ class LinkedListTest < Minitest::Test
   end
 
   def test_can_find_multiple_names_when_num_elements_less_than_0
-    #skip
     list = LinkedList.new
     list.append("West", {pounds_of_food: 60})
     list.append("Adams", {hunting_ammunition: 20})
@@ -242,8 +238,6 @@ class LinkedListTest < Minitest::Test
     list.append("West", {pounds_of_food: 60})
     list.append("Adams", {hunting_ammunition: 20})
     list.append("Smith", {spare_wagon_parts: 10})
-
-    #binding.pry
 
     assert list.includes?("Adams")
     assert list.includes?("West")
@@ -265,7 +259,6 @@ class LinkedListTest < Minitest::Test
 
 
   def test_node_can_be_removed_from_end
-    #skip
     list = LinkedList.new
     list.append("West", {pounds_of_food: 60})
     list.append("Adams", {hunting_ammunition: 20})
