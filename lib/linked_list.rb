@@ -44,9 +44,9 @@ attr_accessor   :head,
         if @head.nil?
           @head = new_node(surname)
         else
-          _head = @head
+          previous_head = @head
           @head = new_node(surname)
-          @head.next_node = _head
+          @head.next_node = previous_head
         end
     end
 
@@ -91,16 +91,16 @@ attr_accessor   :head,
       family_names
     end
 
-    def find(index, number)
+    def find(index, num_elements)
       starting_position = @head
 
       if index < 0 || index >= count
         to_string(@head, count)
       else
-        index.times do | x |
+        index.times do
           starting_position = starting_position.next_node
         end
-      to_string(starting_position, number)
+      to_string(starting_position, num_elements)
       end
     end
 
