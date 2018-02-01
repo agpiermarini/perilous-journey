@@ -3,147 +3,142 @@ require "./lib/node"
 class LinkedList
 
 attr_accessor   :head,
-                :tail,
                 :count
 
     def initialize
         @head = nil
-        @tail = nil
-        @count = 0
+        @count = count
+    end
+
+    def new_node(surname)
+      Node.new(surname.to_s)
     end
 
     def count
-        head.nil? ? @count = 0 : (                  #is this acceptable, discouraged? because of alignment/style or use of ternary, etc?
-
+      if @head.nil?
+        @count = 0
+      else
+        current_node = @head
         @count = 1
-        current_node = head
         until current_node.next_node.nil?
             @count += 1
             current_node = current_node.next_node
         end
-
         @count
-        )
+      end
     end
 
     def append(surname)
-        new_node = Node.new(surname)
-
-        @head.nil? ? (@head = new_node; @tail = @head) :                #what about this?
-                     (@tail.next_node = new_node; @tail = new_node)
+      if @head.nil?
+        @head = new_node(surname)
+      else
+        current_node = @head
+        until current_node.next_node == nil
+          current_node = current_node.next_node
+        end
+      current_node.next_node = new_node(surname)
+      end
     end
 
     def prepend(surname)
-        new_node = Node.new(surname)
-
         if @head.nil?
-            @head = new_node
-            @tail = @head
+          @head = new_node(surname)
         else
-            previous_head = @head
-            @head = new_node
-            @head.next_node = previous_head
+          _head = @head
+          @head = new_node(surname)
+          @head.next_node = _head
         end
     end
 
     def insert(position, surname)
         if @head.nil? || position <= 0
             prepend(surname)
-        elsif position >= count                 #why doesnt this pass when @count?
+        elsif position >= count
             append(surname)
         else
             offset = position - 1
-            preceeding_node = head
-            proceeding_node = head.next_node
+            index_previous_node = @head
+            index_subsequent_node = @head.next_node
 
             offset.times do
-                preceeding_node = preceeding_node.next_node
-                proceeding_node = proceeding_node.next_node
+                index_previous_node = index_previous_node.next_node
+                index_subsequent_node = index_subsequent_node.next_node
             end
-            preceeding_node.next_node = Node.new(surname)
-            preceeding_node.next_node.next_node = proceeding_node
+            index_previous_node.next_node = new_node(surname)
+            index_previous_node.next_node.next_node = index_subsequent_node
         end
     end
 
-    def to_string
-        head.nil? ? (family_names = "No families have been added to the wagon train"):
-                    (family_names = "The #{head.surname} family"; current_node = head.next_node)
+    def to_string(starting_position = @head, ending_position = count)
+      return "There are no families in the wagon train" if @head.nil?
 
+      family_names = "The #{starting_position.surname} family"
+
+      current_node = starting_position.next_node
+
+      if ending_position == count || ending_position <= 0 || ending_position > count
         until current_node.nil?
-            family_names += ", followed by the #{current_node.surname} family"
-            current_node = current_node.next_node
+          family_names += ", followed by the #{current_node.surname} family"
+          current_node = current_node.next_node
         end
+      else
+        offset = ending_position - 1
+        offset.times do
+          family_names += ", followed by the #{current_node.surname} family"
+          current_node = current_node.next_node
+        end
+      end
+      family_names
+    end
 
-        return family_names
+    def find(index, number)
+      starting_position = @head
+
+      if index < 0 || index >= count
+        to_string(@head, count)
+      else
+        index.times do | x |
+          starting_position = starting_position.next_node
+        end
+      to_string(starting_position, number)
+      end
+    end
+
+    def includes?(surname)
+      if @head.nil?
+        false
+      else
+        current_node = @head
+        until current_node.next_node == nil
+          break if current_node.surname == surname.to_s
+          current_node = current_node.next_node
+        end
+        current_node.surname == surname.to_s
+      end
+    end
+
+    def died_of_dysentery(surname)
+      "The #{surname} family has died of dysentery"
+    end
+
+    def pop
+      if @head.nil?
+        "You've killed off all of the families already. You monster."
+      elsif count == 1
+        dead_family = @head
+        died_of_dysentery(dead_family.surname)
+        @head = nil
+        dead_family
+      else
+        current_node = @head
+          until current_node.next_node.next_node == nil
+            current_node = current_node.next_node
+          end
+        dead_family = current_node.next_node
+        current_node.next_node = nil
+        died_of_dysentery(dead_family.surname)
+        dead_family
+      end
     end
 
 end
-
-
-
-
-##DELETE BEFORE FINAL COMMIT
-# def count
-#
-#     if head.nil?
-#         @count = 0
-#     else
-#         current_node = head
-#         @count = 1
-#         until current_node.next_node.nil?
-#             @count += 1
-#             current_node = current_node.next_node
-#         end
-#         @count
-#     end
-# end
-
-# def count
-#     head.nil? ? @count = 0 : @count = 1
-#
-#     current_node = head
-#     until current_node.next_node.nil?
-#         @count += 1
-#         current_node = current_node.next_node
-#     end
-#
-#     @count
-# end
-
-# def append
-#   if @head == nil                      #clean up redundancies---only two conditions if/else, either head is nil or not
-#       @head = new_node
-#       @tail = @head
-#   elsif head.next_node == nil
-#       head.next_node = new_node
-#       @tail = new_node
-#   else
-#       tail.next_node = new_node
-#       @tail = new_node
-#   end
-# end
-
-#def append
-#     if @head == nil                     #clean up redundancies---only two conditions if/else, either head is nil or not
-#         @head = new_node
-#         @tail = @head
-#     else
-#         @tail.next_node = new_node
-#         @tail = new_node
-#     end
-# end
-
-# def to_string
-#
-#     family_names = "The #{head.surname} family"
-#
-#     current_node = head.next_node
-#
-#     until current_node.nil?
-#         family_names += ", followed by the #{current_node.surname} family"
-#         current_node = current_node.next_node
-#     end
-#
-#     return family_names
-#
-# end
