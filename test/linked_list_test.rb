@@ -2,6 +2,7 @@ require "minitest/autorun"
 require "minitest/pride"
 require "pry"
 require "./lib/linked_list"
+require "./lib/wagon_train"
 
 class LinkedListTest < Minitest::Test
 
