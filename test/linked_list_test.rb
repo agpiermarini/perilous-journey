@@ -8,7 +8,7 @@ class LinkedListTest < Minitest::Test
 
   def test_it_can_be_created
     list = LinkedList.new
-    assert_equal LinkedList, list.class
+    assert_instance_of LinkedList, list
   end
 
   def test_it_has_head_nil_by_default
